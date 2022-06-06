@@ -27,9 +27,9 @@ const addNotes = (title, body) => {
             title: title,
             body: body
         })
-        console.log("Note added.")
+        console.log(chalk.green("Note added."))
     } else{
-        console.log("Note title already exists!!!")
+        console.log(chalk.red("Note title already exists!!!"))
     }
 
     saveNotes(notes)
