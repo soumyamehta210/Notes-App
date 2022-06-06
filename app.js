@@ -1,4 +1,4 @@
-const getNotes = require('./notes')
+const {getNotes, addNotes, removeNotes} = require('./notes')
 const chalk = require('chalk')
 const yargs = require('yargs')
 const { argv } = require('process')
@@ -20,15 +20,22 @@ yargs.command({
         }
     },
     handler: (argv) => {
-        fs.writeFileSync('Notes',JSON.stringify(argv))
+        addNotes(argv.title, argv.body)
     }
 })
 
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
-    handler: () => {
-        console.log("Remove a note")
+    builder: {
+        title: {
+            describe: "Note title",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: (argv) => {
+        removeNotes(argv.title)
     }
 })
 
@@ -36,7 +43,7 @@ yargs.command({
     command: 'list',
     describe: 'List down all the notes',
     handler: ()=> {
-        console.log("List down all the notes")
+        console.log(getNotes());
     }
 })
 
